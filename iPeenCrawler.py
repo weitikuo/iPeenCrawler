@@ -150,4 +150,3 @@ print "delicious_score: " + delicious_score
 print "service_score: " + service_score
 print "atmosphere_score: " + atmosphere_score
 
-
