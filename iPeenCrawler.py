@@ -19,9 +19,15 @@ def remove_html_tags(data):
     return p.sub('', data)
 
 # ==========================================================================
-url = 'http://www.ipeen.com.tw/shop/' + '67012'
+#url = 'http://www.ipeen.com.tw/shop/' + '67012'
+url = 'http://www.ipeen.com.tw/shop/' + sys.argv[1]
 response = http_download(url)
 soup = BeautifulSoup(response, "html.parser")
+
+print "=========================================================="
+print "Now Processing the restaurant ID: " + sys.argv[1]
+print "url = " + url
+print "=========================================================="
 
 if(str(soup).find("愛評網") == -1):
 	print 'page not found!!!'
@@ -30,6 +36,10 @@ if(str(soup).find("愛評網") == -1):
 introduction = soup.find("div",{"class":"info"})
 restaurant_name = remove_html_tags(introduction.find("h1").renderContents()).strip().replace('\n','')
 print "restaurant_name: " + restaurant_name
+
+if str(restaurant_name).startswith("已歇業".encode('utf-8')):
+    print 'Skip this restaurant!!!'
+    exit()
 
 basic_info = introduction.find("div",{"class":"brief"})
 cusine_style = remove_html_tags(basic_info.find("p",{"class":"cate i"}).renderContents().strip('\n'))
@@ -59,14 +69,17 @@ print "collect_number: " + collect_number
 detail_data = soup.find("div",{"id":"shop-details"}).find("table")
 detail_info = []
 
-print detail_data
+#print detail_data
 
 for item in detail_data.findAll("tr"):
-   subitem_key = item.find("th")
-   subitem_val = item.find("td")
-   detail_info.append({'key' : subitem_key, 'value' : subitem_val})
-   print subitem_key.renderContents() + " = " + subitem_val.renderContents()
-
+    subitem_key = item.find("th")
+    subitem_val = item.find("td")
+    if subitem_key is None:
+        continue;
+    if subitem_key.renderContents() != "營業時間".encode('utf-8'):
+        detail_info.append({'key' : subitem_key.renderContents().strip('\n'), 'value' : subitem_val.renderContents().strip('\n')})
+        print subitem_key.renderContents().strip('\n') + ":"
+        print subitem_val.renderContents().strip('\n')
 
 
 
