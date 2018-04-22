@@ -149,4 +149,3 @@ atmosphere_score = middle(str(rating_data_score[2].find("i")),'<i style="width: 
 print "delicious_score: " + delicious_score
 print "service_score: " + service_score
 print "atmosphere_score: " + atmosphere_score
-
