@@ -146,7 +146,7 @@ if business_hour_div != None:
         print "len(day_working_hour) = " + str(len(day_working_hour))
         first_time_slot = re.sub(r'( |<|\r|\n|\t|&nbsp;)+', r'', remove_html_tags(day_working_hour[0]).strip('\n'))
         print "first_time_slot = " + first_time_slot
-        if len(day_working_hour) == 2:
+        if len(day_working_hour) >= 2:
             second_time_slot = re.sub(r'( |>|\r|\n|\t|&nbsp;)+', r'', remove_html_tags(day_working_hour[1]).strip('\n'))
             print "second_time_slot = " + second_time_slot
 
