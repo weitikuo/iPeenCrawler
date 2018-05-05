@@ -135,15 +135,20 @@ if business_hour_div != None:
         day_info = item.findAll("td")
         day_of_week = remove_html_tags(day_info[0].renderContents().strip('\n'))
         print "day_of_week = " + day_of_week.strip('\n')
-
-        print "Test: -----------"
-        print str(day_info[1].renderContents().strip('\n'))
-
-        day_working_hour = str(day_info[1].renderContents().strip('\n')).split("br/")
+        day_working_hour_str = str(day_info[1].renderContents().strip('\n'))
+        print "----------- day_working_hour_str = " + day_working_hour_str
+        if "br/" in day_working_hour_str:
+            print "----------- 'br/' in day_working_hour_str:"
+            day_working_hour = str(day_info[1].renderContents().strip('\n')).split("br/")
+        elif "br" in day_working_hour_str:
+            print "----------- 'br' in day_working_hour_str:"
+            day_working_hour = str(day_info[1].renderContents().strip('\n')).split("br")
+        ##print "len(day_working_hour) = " + str(len(day_working_hour))
         first_time_slot = re.sub(r'( |<|\r|\n|\t|&nbsp;)+', r'', remove_html_tags(day_working_hour[0]).strip('\n'))
         print "first_time_slot = " + first_time_slot
-        second_time_slot = re.sub(r'( |>|\r|\n|\t|&nbsp;)+', r'', remove_html_tags(day_working_hour[1]).strip('\n'))
-        print "second_time_slot = " + second_time_slot
+        if len(day_working_hour) == 2:
+            second_time_slot = re.sub(r'( |>|\r|\n|\t|&nbsp;)+', r'', remove_html_tags(day_working_hour[1]).strip('\n'))
+            print "second_time_slot = " + second_time_slot
 
 rating_data = soup.find("dl",{"class":"rating"})
 rating_data_score = rating_data.findAll("dd")
