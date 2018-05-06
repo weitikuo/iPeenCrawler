@@ -122,7 +122,7 @@ except Exception as e:
     connection.rollback()
 
 try:
-    print "str(len(picture_url_list))" + str(len(picture_url_list))
+    print "str(len(picture_url_list)) = " + str(len(picture_url_list))
     # for ipeen_restaurant_comment_picture:
     for picture_url in picture_url_list:
         print "picture_url = " + picture_url
