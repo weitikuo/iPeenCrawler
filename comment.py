@@ -100,7 +100,7 @@ try:
     cursor.execute(query)
     row = cursor.fetchone()
     if row != None:
-        print "The page %d is parsed before!!!!!!!" %(int(ipeen_restaurant_id))
+        print "The page comment_id = %d is parsed before!!!!!!!" %(int(comment_id))
         exit()
     else:
         # pre-process for number fields:
